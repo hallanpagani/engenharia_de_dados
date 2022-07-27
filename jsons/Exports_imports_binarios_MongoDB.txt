@@ -1,0 +1,14 @@
+mongodump | creates a binary export of the contents of a database
+
+mongodump --uri mongodb+srv://<USER>:<PASSWORD>@cluster0.xpto.mongodb.net/<DATABASE>
+
+------------------------------------------
+
+mongorestore | creates a new database or adds data to an existing database. By default, mongorestore reads the database dump in the dump/ sub-directory of the current directory; to restore from a different directory, pass in the path to the directory as a final argument.
+
+///local
+mongorestore
+
+///remoto
+mongorestore --uri mongodb+srv://<USER>:<PASSWORD>@cluster0.xpto.mongodb.net 
+
