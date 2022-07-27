@@ -7,16 +7,17 @@ Pasta jsons -> Arquivos de testes com jsons para importação
 ## 🛠 MongoDB para VS Code
 Stack para testes: **MongoDB** e **MongoDB for Visual Studio Code**. 
 
-MongoDB:  https://www.mongodb.com/try/download/community
+#### MongoDB:  https://www.mongodb.com/try/download/community
 
-Visual Studio Code: https://code.visualstudio.com/
+#### Visual Studio Code: https://code.visualstudio.com/
 
-MongoDB for Visual Studio Code: https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
+#### Extensão "MongoDB for Visual Studio Code": https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
+* Mais sobre a ferramenta mongodb-vscode: https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
-Para importação de arquivos:
-+Compass: https://www.mongodb.com/pt-br/products/compass
+### Software Compass: 
+* Utilizado para visualizar seus bancos de dados MongoDB: https://www.mongodb.com/pt-br/products/compass
+* Referência para importação de arquivos JSON além doque foi mostrado em vídeo: https://www.mongodb.com/docs/compass/current/import-export/
 
-Sobre a ferramenta mongodb-vscode: https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
 ## Autor
 
