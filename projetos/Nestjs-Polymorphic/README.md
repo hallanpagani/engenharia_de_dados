@@ -1,4 +1,4 @@
-## Description
+## Descrição
 
 Essa API NestJS usa o MongoDB para demonstrar a validação de dados polimórficos em documentos com arrays.
 
@@ -27,4 +27,5 @@ Depois de executar, você pode usar o OpenAPI/Swagger para experimentar a API ac
 ## Referência
 
 - Referência - [Rémi Sormain](https://medium.com/@remi.sormain)
+- [Post do projeto](https://medium.com/javascript-in-plain-english/leverage-polymorphic-data-validation-with-nest-js-and-mongoose-10ae1dcbcf6d)
 
