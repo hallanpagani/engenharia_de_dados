@@ -1,0 +1,58 @@
+use('muitoslivros')
+db.livros.find({}).limit(1)  // findOne()
+
+// Quantidade de documentos da coleção books .
+use('muitoslivros')
+db.livros.countDocuments()
+
+// Conte quantos livros existem com o status = "PUBLISH" .
+use('muitoslivros')
+db.livros.countDocuments(
+    { status: "PUBLISH" }
+)
+
+// Conte quantos livros existem com o status = "PUBLISH" .
+use('muitoslivros')
+db.livros.countDocuments(
+    { status: "MEAP" }
+)
+
+// Exiba os atributos title , isbn e pageCount dos 3 primeiros livros.
+// NÃO mostrar o atributo _id .
+use('muitoslivros')
+db.livros.find(
+    {},
+    {
+        _id: 0,
+        title: 1,
+        isbn: 1,
+        pageCount: 1
+    }
+).limit(3)
+
+// Pule 5 documentos e exiba os atributos _id , title , authors e status dos livros 
+// com o status = "PUBLISH" , limitando-se a 10 documentos.
+use('muitoslivros');
+db.livros.find(
+    {
+        status: "PUBLISH"
+    },
+    {
+        title: 1,
+        authors: 1,
+        status: 1
+    }
+).skip(5).limit(10)
+
+/// Count por group by 
+use('muitoslivros');
+const aggregation = [
+   // { $match: { status: "PUBLISH" }},
+   // { $match: { pageCount: { $gt : 350 }  }},
+   // { $match: { status: "PUBLISH", pageCount: { $gt : 400 }  }},
+   { $group : {_id:"$status", count:{$sum:1}}},
+   //{ $sort:{"count":1}}
+];
+db.livros.aggregate(aggregation).toArray();
+
+

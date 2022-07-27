@@ -1,0 +1,14 @@
+use('gerar_varios');
+db.loops.drop();
+
+authorMongoFactory = function() {
+  for(loop=0;loop<10;loop++){
+    db.loops.insertOne({name: "MongoDB factory book" + loop})
+  }
+}
+authorMongoFactory()
+
+use('gerar_varios');
+db.loops.find().toArray();
+
+

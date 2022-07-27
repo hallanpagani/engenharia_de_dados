@@ -1,0 +1,230 @@
+use('bandas');
+
+// O comando drop() destrói todos os dados de uma coleção.
+// Certifique-se de executá-lo no banco de dados e na coleção adequados.
+db.albums.drop();
+
+// Insira alguns documentos na coleção de álbuns.
+use('bandas');
+db.albums.insertMany([
+  { 'name' : 'lo-fi chill hop songs to study to', band_name: 'Silicon Infinite', price: 8.00, status: 'A', 
+    songs: [
+      { title: 'Snow beats', 'plays': 133 },
+      { title: 'Rolling By',  'plays': 242 },
+      { title: 'Sway',  'plays': 3191 }
+    ]
+  },
+  { 'name' : 'Moon Rocks', band_name: 'Silicon Infinite', price: 2.00, status: 'B', 
+    songs: [
+      { title: 'Milk Toast', 'plays': 118 },
+      { title: 'Purple Mic',  'plays': 719 },
+      { title: 'One Note Dinner Party',  'plays': 1242 }
+    ]
+  },
+  { 'name' : 'Flavour', band_name: 'Organical', price: 5.00,  status: 'A', 
+    songs: [
+      { title: 'But First Coffee', 'plays': 562 },
+      { title: 'Autumn',  'plays': 901 }
+    ]
+  },
+]);
+
+//use('bandas');
+//db.albums.countDocuments();
+
+// Contar todos os registros de álbuns 
+/*
+SELECT COUNT(*) AS count FROM albums;
+*/
+use('bandas');
+db.albums.aggregate([
+  {
+     $group: {
+        _id: null,
+        count: { $sum: 1 }
+     }
+   }
+]);
+
+
+/*
+SELECT SUM(price) AS total FROM albums;
+*/
+// Soma o campo de preço geral
+use('bandas');
+db.albums.aggregate( [
+   {
+     $group: {
+        _id: null,
+        total: { $sum: "$price" }
+     }
+   }//,
+   //{ $project : {
+   //             total: 1,
+   //             _id : NumberInt(0)
+   //             }
+   //}
+] )
+
+
+/*
+SELECT band_name,
+  SUM(price) AS total
+FROM albums
+GROUP BY band_name;
+*/
+// Para cada band_name unico, somar o campo de preço.
+use('bandas');
+db.albums.aggregate( [
+   {
+     $group: {
+        _id: "$band_name",
+        total: { $sum: "$price" }
+     }
+   }
+] )
+
+
+/*
+SELECT band_name,
+       SUM(price) AS total
+FROM albums
+GROUP BY band_name
+ORDER BY total;
+*/
+// Para cada band_name unico, somar o campo de preço, ordem.
+use('bandas');
+db.albums.aggregate( [
+   {
+     $group: {
+        _id: "$band_name",
+        total: { $sum: "$price" }
+     }
+   },
+   { $sort: { total: 1 } }
+] )
+
+/*
+SELECT band_name,
+       count(*)
+FROM albums
+GROUP BY band_name
+--HAVING count(*) > 1;
+*/
+// Para bandas com vários álbuns, retorne o band_name e a contagem de álbuns correspondente com having.
+use('bandas');
+db.albums.aggregate( [
+   {
+     $group: {
+        _id: "$band_name",
+        count: { $sum: 1 }
+     }
+   }//,
+  //{ $match: { count: { $gt: 1 } } }
+] )
+
+/*
+SELECT band_name,
+  SUM(price) AS total
+FROM albums
+GROUP BY band_name
+HAVING SUM(price) > 5.00;
+*/
+// Para cada agrupamento exclusivo de band_name, 
+// some o campo de preço e retorne apenas quando a soma for maior que 5.00. 
+use('bandas');
+db.albums.aggregate( [
+   {
+     $group: {
+        _id: {
+           cust_id: "$band_name",
+        },
+        total: { $sum: "$price" }
+     }
+   },
+   { $match: { total: { $gt: 5.00 } } }
+] )
+
+
+/*
+SELECT band_name,
+       SUM(price) as total
+FROM albums
+WHERE status = 'A'
+GROUP BY band_name;
+*/
+// Para cada band_name unico com status A, some o campo de preço.
+use('bandas');
+db.albums.aggregate( [
+   { $match: { status: 'A' } },
+   {
+     $group: {
+        _id: "$band_name",
+        total: { $sum: "$price" }
+     }
+   }
+] )
+
+/*
+SELECT band_name,
+       SUM(price) as total
+FROM albums
+WHERE status = 'A'
+GROUP BY band_name
+HAVING SUM(price) > 5.00;
+*/
+// Para cada band_name unico com status A, some o campo de preço e retorne apenas quando a soma for maior que 5,00.
+use('bandas');
+db.albums.aggregate( [
+   { $match: { status: 'A' } },
+   {
+     $group: {
+        _id: "$band_name",
+        total: { $sum: "$price" }
+     }
+   },
+   { $match: { total: { $gt: 5.00 } } }
+] )
+
+/*
+SELECT band_name,
+       SUM(songs.plays) as total_plays
+FROM albums,
+     songs
+WHERE songs.album_id = albums.id
+GROUP BY band_name;
+*/
+// Para cada band_name unico, some o campo de reprodução de música correspondente associado aos álbuns.
+use('bandas');
+db.albums.aggregate( [
+   { $unwind: "$songs" },
+   {
+     $group: {
+        _id: "$band_name",
+        qty: { $sum: "$songs.plays" }
+     }
+   }
+] )
+
+/*
+SELECT band_name,
+       SUM(songs.plays) as total_plays
+FROM albums,
+     songs
+WHERE songs.album_id = albums.id and
+      band_name = 'Silicon Infinite' 
+GROUP BY band_name;
+*/
+// Para cada band_name exclusivo, some o campo de reprodução (song.plays) de música correspondente 
+// associado ao álbum de uma determinada banda
+use('bandas');
+db.albums.aggregate( [
+   { $match: { band_name: 'Silicon Infinite' } },
+   { $unwind: "$songs" },
+   {
+     $group: {
+        _id: "$band_name",
+        qty: { $sum: "$songs.plays" }
+     }
+   }
+] )

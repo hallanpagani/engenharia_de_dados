@@ -1,0 +1,129 @@
+use ('tipos_de_dados');
+db.strings.drop(); // dropar tudo que tem na coleção
+
+use ('tipos_de_dados');
+db.strings.insertOne({nome: "Hallan"}) 
+db.strings.insertOne({nome: null, rua: "Rua Qualquer"}) 
+
+use ('tipos_de_dados');
+db.strings.find({})
+//db.strings.find({  _id : ObjectId("62df09dac6c6ece5fd8b90a1")})
+
+//Inserir Vários 
+use ('tipos_de_dados');
+db.strings.insertMany([{nome: "Hallan 1"},
+                       {nome: "Hallan 2"},
+                       {nome: "Maria"},
+                       {nome: null, rua: "Rua Qualquer 2"}]) 
+
+use ('tipos_de_dados');
+db.strings.find({}).sort({nome:1})
+
+use ('tipos_de_dados');
+// updateOne só faz update em um registro
+db.strings.updateOne({
+  nome: /Hallan/  
+},
+{
+  "$set": {
+    "ativo": false
+  }
+},
+{
+  "upsert": true
+})
+
+use ('tipos_de_dados');
+db.strings.find({}).sort({nome:-1})
+
+use ('tipos_de_dados');
+// updateMany busca todos que atenderem ao filtro
+db.strings.updateMany({
+  nome: /Hallan/
+},
+{
+  "$set": {
+    "ativo": true
+  }
+},
+{
+  "upsert": true
+})
+
+use ('tipos_de_dados');
+db.strings.find({}).sort({nome:-1})
+
+use ('tipos_de_dados');
+db.strings.updateMany({
+  nome: null
+},
+{
+  "$set": {
+    "nome": "Não nullo"
+  }
+},
+{
+  //"multi": false,
+  "upsert": true
+})
+
+use ('tipos_de_dados');
+db.strings.find(
+  { rua: { $exists: false } }
+)
+
+use ('tipos_de_dados');
+db.strings.find({})
+
+// boolean
+use ('tipos_de_dados');
+db.bools.insertOne({nome: "Vinicius", trabalhando: true})
+use ('tipos_de_dados');
+db.bools.find({})
+
+// numeros
+use ('tipos_de_dados');
+db.numbers.insertOne({double: 12.2, outro: 500000000, inteiro: NumberInt("5")})
+use ('tipos_de_dados');
+db.numbers.find({})
+
+// arrays
+use ('tipos_de_dados');
+db.arrays.insertMany([{carros: ["BMW", "Ferrari", "Fusca"]},
+                     {carros: ["GOL"]}])
+
+use ('tipos_de_dados');
+db.arrays.find({})
+use ('tipos_de_dados');
+db.arrays.find({ "carros": { $in: ["GOL"] } })
+
+
+/// datas
+use ('tipos_de_dados');
+db.dates.insertOne({data: new Date()})
+/*
+  Coordinated Universal Time (UTC)
+  MongoDB grava as datas com UTC e não há como modificarmos isso. 
+  Isso foi feito para lidar com datas de diferentes fuso horários no mundo, o que é uma vantagem.
+*/
+use ('tipos_de_dados');
+db.dates.find({})
+
+// documents / objetos
+use ('tipos_de_dados');
+db.documents.insertOne({nome: "Hallan", desc: {profissao: "Programador", hobbies: ["Estudar", "Ler", "Caminhar"]}})
+
+use ('tipos_de_dados');
+db.documents.find({})
+
+
+
+
+
+
+
+
+
+
+
+

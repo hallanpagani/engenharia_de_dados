@@ -1,0 +1,58 @@
+use('muitoslivros');
+db.livros.findOne()
+
+//3 - dado específico
+use('muitoslivros'); 
+db.livros.find({pageCount: 362})
+
+//4 - operador in
+use('muitoslivros');
+db.livros.find({categories: {$in: ["Java", "Internet"]}})
+
+//5 - múltiplas condições
+use('muitoslivros');
+db.livros.find({ pageCount: 592, _id: 63 })
+
+//6 - maior que
+use('muitoslivros');
+db.livros.find({ pageCount: { $gt: 450 }})
+
+//EXERCICIO 8
+use('muitoslivros');
+db.livros.find({ pageCount: {$gt: 800} })
+use('muitoslivros');
+db.livros.find({ _id: {$gt: 122} })
+
+//7 - menor que
+use('muitoslivros');
+db.livros.find({ pageCount: { $lt: 120 }})
+
+//8 - or
+use('muitoslivros');
+db.livros.find({ $or: [{pageCount: {$gt: 500}, _id: {$lt: 5}}]})
+
+//and e or
+use('muitoslivros');
+db.livros.find({ status: "PUBLISH", $or: [{pageCount: 500}, {authors: "Robi Sen"}] })
+
+//9 - count
+use('muitoslivros');
+db.livros.find({ pageCount: {$gt: 600 }}).count()
+
+use('muitoslivros');
+db.livros.find({ categories: "Java" })
+
+use('muitoslivros');
+db.livros.find({ pageCount: { $lt: 100 } })
+
+use('muitoslivros');
+db.livros.find({ categories: "Microsoft", pageCount: { $gt: 300 } })
+
+use('muitoslivros');
+db.livros.find({ categories: "Web Development" })
+
+use('muitoslivros');
+db.livros.find({ $or: [{ authors: "Bret Updegraff" }, { categories: "Mobile" }] })
+
+
+

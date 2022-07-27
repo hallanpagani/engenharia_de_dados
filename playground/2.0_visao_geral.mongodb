@@ -1,0 +1,121 @@
+use('usuarios');
+db.usuarios.drop();
+
+// mostrar base test quando não utiliza use
+
+use('usuarios');
+db.usuarios.insertMany([
+    { idade: 18, nome: "Pedro"},
+    { idade: 31, nome: "Amanda"},
+    { idade: 20, nome: "Junior"},
+    { idade: 55, nome: "Junior"},
+    { idade: 40, nome: "Junior"},
+    { idade: 35, nome: "Rafael"},    
+    { idade: 55, nome: "Maria"},
+    { idade: 27, nome: "Tainara"},
+    { idade: 27, nome: "Samara"}]
+)
+
+use('usuarios');
+//SELECT * FROM usuarios
+db.usuarios.find()
+
+//select nome from usuarios
+use('usuarios');
+db.usuarios.find({}, { nome : 1, _id : 0 })
+// mostrar https://studio3t.com/ antigo robomongo
+
+//SELECT * FROM usuarios WHERE idade > 33 AND idade < 40 
+use('usuarios');
+db.usuarios.find({idade: {$gt: 33, $lt: 40}})
+
+//SELECT * FROM usuarios WHERE idade = 32 AND nome = ‘Tainara’ .. não encontra
+use('usuarios'); 
+db.usuarios.find({idade: 32, nome: 'Tadasinara'})
+
+//SELECT * FROM usuarios WHERE idade = 33 OR nome = ‘Tainara’
+use('usuarios');
+db.usuarios.find({$or:[{idade:33}, {nome: 'Tainara'}]})
+
+//SELECT * FROM usuarios WHERE idade = 55 ORDER BY nome ASC
+use('usuarios'); 
+db.usuarios.find({idade: 55}).sort({nome: 1})
+
+//SELECT * FROM usuarios ORDER BY nome DESC
+use('usuarios'); 
+db.usuarios.find().sort({nome: -1})
+
+//SELECT * FROM usuarios WHERE nome LIKE'%Jun%'
+use('usuarios'); 
+db.usuarios.find({nome: /Jun/})
+
+//SELECT * FROM usuarios WHERE nome LIKE 'Jun%' 
+use('usuarios');
+db.usuarios.find({nome: /^Jun/})
+
+//SELECT * FROM usuarios WHERE nome LIKE '%ara%' 
+use('usuarios');
+db.usuarios.find({nome: /ara/})
+
+//SELECT * FROM usuarios LIMIT 10 SKIP 20 
+use('usuarios'); 
+db.usuarios.find().skip(20).limit(10)
+
+//SELECT * FROM usuarios LIMIT 1 
+use('usuarios'); 
+db.usuarios.findOne()
+
+//SELECT DISTINCT nome FROM usuarios
+use('usuarios');  
+db.usuarios.distinct("nome")
+
+//SELECT COUNT(*) FROM usuarios 
+use('usuarios'); 
+db.usuarios.countDocuments()
+
+//SELECT COUNT(*) FROM usuarios WHERE idade > 30 
+use('usuarios');  
+db.usuarios.find({idade: {$gte: 30}}).count()
+
+//SELECT COUNT(idade) FROM usuarios
+use('usuarios');  
+db.usuarios.find({idade: {$exists: true}}).count()
+
+//UPDATE usuarios SET idade = 30 WHERE nome ='Tainara';
+use('usuarios');  
+db.usuarios.updateMany({nome: "Tainara"}, {$set:{idade: 30}}, {multi: true})
+
+//UPDATE usuarios SET idade = idade + 2 WHERE nome= 'Tainara'
+use('usuarios');  
+db.usuarios.updateMany({nome: "Tainara"}, {$inc: {idade: 2}}, {multi: true})
+
+use('usuarios');
+//SELECT * FROM usuarios
+db.usuarios.find()
+
+//DELETE FROM usuarios WHERE nome = 'Samara' 
+use('usuarios');
+db.usuarios.deleteOne({nome: "Samara"})
+
+//DELETE FROM usuarios WHERE _id = ObjectId
+use('usuarios');
+db.usuarios.deleteOne( {"_id": ObjectId("62df0c2ebf2bc63a11b7fbdf")});
+
+//CREATE INDEX ON usuarios (nome ASC) 
+use('usuarios');
+db.usuarios.ensureIndex({nome: 1})
+
+//CREATE INDEX ON usuarios (nome ASC, idade DESC) 
+use('usuarios');
+db.usuarios.ensureIndex({nome: 1, idade: -1}) 
+
+//EXPLAIN SELECT * FROM usuarios WHERE idade = 32 
+use('usuarios');
+db.usuarios.find({idade: 32}).explain()
+
+use('usuarios'); 
+db.usuarios.find().sort({nome: 1, idade: -1})
+
+use('usuarios'); 
+db.usuarios.find().sort({nome: 1, idade: -1}).explain()
+
