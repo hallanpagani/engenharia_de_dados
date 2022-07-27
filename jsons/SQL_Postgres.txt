@@ -1,0 +1,58 @@
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT
+    * 
+  FROM public.comissoes 
+) t;
+
+
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT
+    * 
+  FROM public.vendas 
+) t;
+
+
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT
+    * 
+  FROM public.produtos 
+) t;
+
+
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT
+    * 
+  FROM public.funcionarios 
+) t;
+
+
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT
+    * 
+  FROM public.mesas 
+) t;
+
+SELECT array_to_json(array_agg(t))
+FROM (
+  SELECT 
+  	ven.id,
+    ven.venda_codigo,
+   	ven.mesa_id,
+    ven.funcionario_id,
+    ven.venda_valor,
+    ven.venda_desconto,
+    ven.venda_total,
+   	(SELECT array_to_json(array_agg(itens_vendas))
+     FROM (
+         SELECT * FROM public.itens_vendas
+          ) AS itens_vendas
+    ) AS itens
+  FROM public.vendas ven
+) t;
+
+
