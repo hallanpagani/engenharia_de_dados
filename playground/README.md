@@ -1,8 +1,7 @@
 Os arquivos deste diretório foram mostrados em vídeo como testes com MongoDB for VS Code.
 Mas nada impede de utilzados no MongoShell ou no Compass.
 
-Pasta jsons -> Arquivos de testes com jsons para importação
-
+Lembrar de importar os arquivos JSON de testes que estão na pasta "engenharia_de_dados/jsons" alguns dos código tomam como base estes arquivos.
 
 ## 🛠 MongoDB para VS Code
 Stack para testes: **MongoDB** e **MongoDB for Visual Studio Code**. 
