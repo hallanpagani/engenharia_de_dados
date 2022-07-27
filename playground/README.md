@@ -14,10 +14,9 @@ Visual Studio Code: https://code.visualstudio.com/
 MongoDB for Visual Studio Code: https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
 
 Para importação de arquivos:
++Compass: https://www.mongodb.com/pt-br/products/compass
 
-Compass: https://www.mongodb.com/pt-br/products/compass
-
-+ Sobre a ferramenta mongodb-vscode: https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
+Sobre a ferramenta mongodb-vscode: https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
 ## Autor
 
